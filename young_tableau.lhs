@@ -44,7 +44,7 @@ with a method to draw the Young diagram corresponding to a partition.
 Here is how the partition $\lambda = (6,4,4,2)$ looks like as a Young
 diagram rendered as `draw (youngDiagram [6,4,4,2])`
 
-![Example of a young diagram](./tableau1.svg)
+![Example of a young diagram](./tableau1.png)
 
 Given a young diagram $\mu$ contained in $\lambda$ one can construct a
 *skew diagram* or *skew shape*, $\lambda / \mu$ as the diagram
@@ -60,7 +60,7 @@ The following is the skew shape for $\lambda = (6,4,4,2)$ and $\mu =
 (3,3,1)$ rendered as `draw (skew [3,3,1]) <> draw (youngDiagram
 [6,4,4,2])`
 
-![Example of a skew diagram](./tableau2.svg)
+![Example of a skew diagram](./tableau2.png)
 
 Finally, a young tableau is a filling of a young diagram that is
 
@@ -86,7 +86,7 @@ Here are two examples rendered by
 ||| youngTableau [2,2,1] [[1],[1]] [[2,2],[3],[3]]
 ```
 
-![Example of young and skew tableau](./tableau3.svg)
+![Example of young and skew tableau](./tableau3.png)
 
 Next time, I'll work through the bumping and sliding
 algorithms and hopefully explore it with animation support in
