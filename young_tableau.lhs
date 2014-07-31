@@ -7,7 +7,7 @@
 [View literate file on Github](https://github.com/nanonaren/blog/blob/master/young_tableaux_1.lhs)
 
 I have a book sitting on my shelf: Young Tableaux by William Fulton
-[ref]. I bought it after having the fantastic chance to see these
+(ISBN 0 521 56724 6). I bought it after having the fantastic chance to see these
 beautiful and deep combinatorial structures in a couple of math
 courses. So, as I work through this book, I will be illustrating Young
 tableux and associated algorithms with Haskell. The great
@@ -22,7 +22,7 @@ to avoid replicating too much material from the book.
 > import Diagrams.Backend.SVG.CmdLine
 
 A Young Diagram is a drawing of a partition $\lambda = (\lambda_1,
-\dots, \lambda_k)$ such that each $\lambda_i > \lambda_(i+1)$ where
+\dots, \lambda_k)$ such that each $\lambda_i > \lambda_{i+1}$ where
 $\lambda_i$ is represented as a row of boxes aligned to the left.
 
 A single box can be rendered as
