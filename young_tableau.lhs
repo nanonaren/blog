@@ -91,5 +91,3 @@ Here are two examples rendered by
 Next time, I'll work through the bumping and sliding
 algorithms and hopefully explore it with animation support in
 `diagrams`.
-
-> main = mainWith (    youngTableau [3,3,1] [] [[1,2,2],[2,3,3],[4]] ||| strutX 0.15 ||| youngTableau [2,2,1] [1,1] [[2,2],[3],[3]]  )
