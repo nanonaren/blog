@@ -19,7 +19,7 @@ to avoid replicating too much material from the book.
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 > import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
+> import Diagrams.Backend.Cairo.CmdLine
 
 A Young Diagram is a drawing of a partition $\lambda = (\lambda_1,
 \dots, \lambda_k)$ such that each $\lambda_i > \lambda_{i+1}$ where
@@ -83,7 +83,7 @@ Here are two examples rendered by
 ```
     youngTableau [3,3,1] [] [[1,2,2],[2,3,3],[4]]
 ||| strutX 1
-||| youngTableau [2,2,1] [[1],[1]] [[2,2],[3],[3]]
+||| youngTableau [2,2,1] [1,1] [[2,2],[3],[3]]
 ```
 
 ![Example of young and skew tableau](./tableau3.png)
@@ -91,3 +91,5 @@ Here are two examples rendered by
 Next time, I'll work through the bumping and sliding
 algorithms and hopefully explore it with animation support in
 `diagrams`.
+
+> main = mainWith (    youngTableau [3,3,1] [] [[1,2,2],[2,3,3],[4]] ||| strutX 0.15 ||| youngTableau [2,2,1] [1,1] [[2,2],[3],[3]]  )
