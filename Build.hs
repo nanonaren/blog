@@ -13,17 +13,8 @@ main = shakeArgs shakeOptions{shakeFiles="_build/"} $ do
        , "_build/schensted.html"
        ]
 
--- BLOG: Schensted operation
-
-  "_build/schensted.html" *> \out -> do
-    let inp = "schensted.lhs"
-    need [inp,"_build/schensted_fig1.png"]
-    Stdout x <- cmd blogliterately "--html-only -g" inp
-    liftIO $ writeFile out x
-
-  "_build/schensted_fig1.png" *> \out -> do
-    need ["_build/gen_figs"]
-    cmd "_build/gen_figs" "--selection" (takeBaseName out) "-o" out "-w 400"
+  blogWithFigs ["hungarian_fig1"] "hungarian_algorithm"
+  blogWithFigs ["schensted_fig1"] "schensted"
 
 -- Utils
 
@@ -31,3 +22,16 @@ main = shakeArgs shakeOptions{shakeFiles="_build/"} $ do
     let inp = "figs/gen_figs.hs"
     need [inp]
     cmd "ghc" "--make" "-o" out inp
+
+blogWithFigs figs fp = do
+
+  (map (\x -> "_build" </> x <.> "png") figs) |*>  \fig -> do
+    need ["_build/gen_figs"]
+    cmd "_build/gen_figs" "--selection" (takeBaseName fig) "-o" fig "-w 400"
+
+  ("_build" </> fp <.> "html") *> \out -> do
+    let inp = fp <.> "lhs"
+        figures = map (\x -> "_build" </> x <.> "png") figs
+    need (inp : figures)
+    Stdout x <- cmd blogliterately "--html-only -g" inp
+    liftIO $ writeFile out x
