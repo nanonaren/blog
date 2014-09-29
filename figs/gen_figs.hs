@@ -5,7 +5,9 @@ module Main
     ) where
 
 import Diagrams.Prelude
-import Diagrams.Backend.Cairo.CmdLine
+import Diagrams.Backend.Rasterific.CmdLine
+import Data.Tree
+import Diagrams.TwoD.Layout.Tree
 
 cell x nm = ((text (show x) # fontSize (Local 0.07)) <> square 0.2) # named nm
 
@@ -38,8 +40,23 @@ draw = vcat . map (hcat . map (\x -> square 0.1 <> (text x # fontSize (Local 0.0
 
 hungarian_fig = hcat' (with & sep .~ 0.1) [draw ex1,draw ex2,draw ex3]
 
+----
+
+short_circuiting_fig1 = rend tr1 ||| strutX 0.1 ||| rend tr2
+    where rend t =
+              renderTree ((<> circle 1 # fc white) . text)
+               (~~)
+               (symmLayout' (with & slHSep .~ 4 & slVSep .~ 4) t)
+               # centerXY # pad 1.1
+          tr1 = Node "R" [Node "1" (map lf ["1","4"])
+                         ,Node "2" (map lf ["2","8"])]
+          tr2 = Node "R" [Node "1" (map lf ["3","5"])
+                         ,Node "3" (map lf ["9","15"])]
+          lf x = Node x []
+
 main = multiMain
        [
          ("schensted_fig1",schensted_fig)
        , ("hungarian_fig1",hungarian_fig)
+       , ("short_circuiting_fig1",short_circuiting_fig1)
        ]
