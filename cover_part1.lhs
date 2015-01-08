@@ -88,7 +88,7 @@ list.
 Instead, let's define the schedule as a function that only computes
 this list given a range.
 
-> newtype Schedule2 r a = Schedule2 {runSchedule :: (r,r) -> [(a,(r,r))]}
+> newtype Schedule2_ r a = Schedule2_ {runSchedule2_ :: (r,r) -> [(a,(r,r))]}
 > -- Those familiar with Haskell libraries will see that
 > -- this is the same as
 > -- ScheduleH r a = ScheduleH {runSchedule :: StateT (r,r) [] a}
@@ -136,10 +136,17 @@ To show you how they work here are some examples.
 Using the primitives
 --------------------
 
-> dayOfWeek :: String -> Schedule DT ((Int,Bool),(DT,DT))
+Let's use these primitives to define a schedule that defines a
+specified day of the week.
+
+> dayOfWeek :: String -> Schedule2 DT ((Int,Bool),(DT,DT))
 > dayOfWeek str = periodic (fromIntegral i*24*3600) (fromIntegral (i+1)*24*3600 -1) (fromIntegral (7 + i)*24*3600)
 >   where Just idx = str `elemIndex` ["Mo","Tu","We","Th","Fr","Sa","Su"]
 >         i = (idx+4) `mod` 7
+
+    [ghci]
+    mapM_ print $ runCover (dayOfWeek "Th") (0,14*24*3600-1)
+    mapM_ print $ runCover (dayOfWeek "Fr") (1234,14*24*3600-3012)
 
 It's all swell that dayOfWeek is doing what its supposed to but what
 if you wanted a simpler user-defined range? What if just wanted it to
@@ -149,18 +156,23 @@ this. The abstraction that captures this idea is the same one that
 captures converting a list of `[Int]` to a list of `[String]` -- a
 functor.
 
--- > instance Functor Schedule2 where
--- >   fmap f (Schedule2 m) = Schedule2 $ \s -> fmap (_) (m s)
+> instance Functor (Schedule2_ r) where
+>   fmap f (Schedule2_ m) = Schedule2_ $ \s ->
+>     map (\(a,r) -> (f a,r)) (m s)
 
 and now
 
     [ghci]
-    mapM_ print $ runCover ((\((_,b),_) -> if b then Just "Mo" else Nothing) `fmap` dayOfWeek "Mo") (0,14*24*3600)
+    let f ((_,b),_) = if b then Just "Th" else Nothing
+    mapM_ print $ runCover (f `fmap` dayOfWeek "Th") (0,14*24*3600-1)
 
 Let's create another pattern using the `periodic` primitive.
 
-> arbitraryRange :: DT -> Int -> Schedule DT ((Int,Bool),(DT,DT))
+> arbitraryRange :: DT -> Int -> Schedule2 DT ((Int,Bool),(DT,DT))
 > arbitraryRange dt secs = periodic dt (dt + fromIntegral secs -1) (dt + fromIntegral secs)
+
+    [ghci]
+    mapM_ print . map snd $ runCover (arbitraryRange (5*3600) (12*3600)) (4412,2*24*3600-5432)
 
 Combining Schedules 1
 ---------------------
