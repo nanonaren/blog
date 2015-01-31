@@ -28,6 +28,7 @@ You don't scramble into a panic because your best pal already has a
 parser created and it reads as follows. Some imports;
 
 > {-# LANGUAGE OverloadedStrings #-}
+> module CoverPart2 where
 > import CoverPart1
 > import SchedulePrimitives
 > import Prelude hiding (takeWhile)
@@ -39,7 +40,7 @@ parser created and it reads as follows. Some imports;
 > import Data.Functor.Compose
 > import Data.Text (Text,unpack,pack)
 
-a few individual parsers for the label, the day of week and time range components;
+a few individual parsers for the label, the day of week, and time range components;
 
 > label :: Parser Text
 > label = skipSpace *> takeWhile1 (\c -> not (isEndOfLine c) && (isAlphaNum c || isSpace c)) <* endOfLine
@@ -87,8 +88,8 @@ this parser and convert it to a schedule. That's just a whole lot of
 double work. Because, you essentially end up writing another parser --
 only this time, it parses a data structure. So, let's have a look at our
 humble friend from the last post that allowed us to hang `IO`
-actions within a `Schedule r`. Surely, what we want is to hang
-`Schedule r` within a `Parser`!
+actions within a `Schedule DT`. Surely, what we want is to hang
+`Schedule DT` within a `Parser`!
 
 > type ParserS = Compose Parser (Schedule DT)
 > 
