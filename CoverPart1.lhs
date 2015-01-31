@@ -5,7 +5,7 @@
     tags       = pattern, functor, applicative
     categories = Haskell
 
-[View literate file on Github](https://github.com/nanonaren/blog/blob/master/cover_part1.lhs)
+[View literate file on Github](https://github.com/nanonaren/blog/blob/master/CoverPart1.lhs)
 
 Recently, while constructing a domain-specific language (DSL), I had
 to solve a problem analogous to the following. You are given a company
@@ -47,6 +47,7 @@ directions) since "Thursday, 1 Jan 1970 00:00:00" (represented by $0$).
 
 > {-# LANGUAGE TupleSections #-}
 > {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+> module CoverPart1 where
 > import SchedulePrimitives --hidden for now
 > import Control.Applicative
 > import Data.Time.Format     (readTime)
