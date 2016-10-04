@@ -2,7 +2,7 @@
     profile    = nanonaren
     postid     = 854
     title      = "Sequence of Decompositions (22/365)"
-    tags       = daily, haskell
+    tags       = daily, probability
     categories =
 
 I am now at the end of Chapter 1 in with four sections to go on random
