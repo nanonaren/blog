@@ -15,12 +15,19 @@ Proceed as follows.
 
 $$
 \mbox{cov}(\theta_{d}-\theta_{c},\theta_{b}-\theta_{a})	\\
-= E\left[(\theta_{d}-\theta_{c}-E(\theta_{d}-\theta_{c}))\right]E\left[(\theta_{b}-\theta_{a}-E(\theta_{b}-\theta_{a}))\right] \\
-= E\left[\theta_{d}-\theta_{c}-E\theta_{d}+E\theta_{c}\right]E\left[(\theta_{b}-\theta_{a}-E\theta_{b}+E\theta_{a}\right] \\
-= E\left[\theta_{d}-\theta_{c}\right]E\left[\theta_{b}-\theta_{a}\right]\mbox{ since }E\theta_{k}=E\theta_{1}\mbox{ for all }k \\
-= 0\mbox{ since }E\theta_{k}=E\theta_{1}\mbox{ for all }k
+= E\left[(\theta_{d}-\theta_{c}-E(\theta_{d}-\theta_{c}))(\theta_{b}-\theta_{a}-E(\theta_{b}-\theta_{a}))\right] \\
+= E\left[(\theta_{d}-\theta_{c}-E\theta_{d}+E\theta_{c})(\theta_{b}-\theta_{a}-E\theta_{b}+E\theta_{a})\right] \\
+= E\left[(\theta_{d}-\theta_{c})(\theta_{b}-\theta_{a})\right]\mbox{ since }E\theta_{k}=E\theta_{1}\mbox{ for all }k=0 \\
+= E\left[(\theta_{d}-E(\theta_{d}|\mathcal{D}_{c}))(\theta_{b}-E(\theta_{b}|\mathcal{D}_{a}))\right]\mbox{ by martingale definition} \\
+= E\left[(E(\theta_{n}|\mathcal{D}_{d})-E(\theta_{n}|\mathcal{D}_{c}))(E(\theta_{n}|\mathcal{D}_{b})-E(\theta_{n}|\mathcal{D}_{a}))\right] \\
+\mbox{ by martingale definition} \\
+= E\left[E(\theta_{n}|\mathcal{D}_{d})E(\theta_{n}|\mathcal{D}_{b})\right]-E\left[E(\theta_{n}|\mathcal{D}_{b})E(\theta_{n}|\mathcal{D}_{c})\right]-E\left[E(\theta_{n}|\mathcal{D}_{d})E(\theta_{n}|\mathcal{D}_{a})\right]+E\left[E(\theta_{n}|\mathcal{D}_{c})E(\theta_{n}|\mathcal{D}_{a})\right] \\
+= EE(\theta_{n}^{2}|\mathcal{D}_{d})-EE(\theta_{n}^{2}|\mathcal{D}_{c})-EE(\theta_{n}^{2}|\mathcal{D}_{d})+EE(\theta_{n}^{2}|\mathcal{D}_{c}) \\
+\mbox{ because the finer decomposition subsumes the coarser one} \\
+= 2\theta_{n}^{2}-2\theta_{n}^{2}\mbox{ by total probability formula} \\
+= 0
 $$
- 
+
 As a quick note as to why $E\theta_k = E\theta_1$,
 
 $$
